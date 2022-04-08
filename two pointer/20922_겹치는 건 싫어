@@ -1,0 +1,33 @@
+#include <iostream>
+
+using namespace std;
+
+int cnt[10001] = { 0 };
+int arr[200000];
+
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int n, k;
+
+	cin >> n >> k; // 수열 길이 >> 같은 정수 최대 개수
+
+	int answer = 0;
+	int start = 0;
+
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i]; // 숫자 배열로 입력받기
+		cnt[arr[i]]++; // 배열 각 원소 숫자 세기
+
+		while (cnt[arr[i]] > k) { //같은 원소 개수가 K개를 넘으면
+			cnt[arr[start]]--; 
+			start++;
+		}
+
+		answer = max(answer, i - start + 1);
+	}
+
+	cout << answer;
+}
