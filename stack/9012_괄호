@@ -1,0 +1,44 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int t;
+	cin >> t;
+
+	for (int i = 0; i < t; i++) {
+
+		stack <char> s;
+		string answer = "YES";
+
+		string input;
+		cin >> input; // 문자열 입력 받기
+
+		for (int j = 0; j < input.length(); j++) {
+			if (input[j] == '(') {
+				s.push(input[j]); // '('문자 스텍에 넣기
+			}
+
+			else if (input[j] == ')' && !s.empty()) {
+				s.pop(); // 스텍에서 pop
+			}
+
+			else {
+				answer = "NO";
+				break;
+			}
+		}
+
+		if (!s.empty()) {
+			answer = "NO"; //만약 스텍이 비어있지 않다면
+		}
+
+		cout << answer << "\n";
+	
+	}
+}
