@@ -30,6 +30,6 @@ int main() {
 		k = a / gcf;
 		m = b / gcf;
 
-		cout << gcf * k * m << "\n"; //
+		cout << gcf * k * m << "\n"; //최소공배수 
 	}
 }
