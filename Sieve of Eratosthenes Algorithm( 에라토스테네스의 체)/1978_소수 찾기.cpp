@@ -1,10 +1,12 @@
+//ì£¼ì–´ì§„ nê°œì˜ ìˆ«ì ì¤‘ì—ì„œ ì†Œìˆ˜ê°€ ëª‡ ê°œì¸ì§€ ì°¾ì•„ì„œ ì¶œë ¥í•˜ëŠ” í”„ë¡œê·¸ë¨
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
 using namespace std;
 
 
-vector <bool> premium(int n) { //¼Ò¼ö Ã£´Â ÇÔ¼ö( ¼Ò¼ö¸é 0, ¼Ò¼ö ¾Æ´Ï¸é 1ÀÎ ºÒ¸®¾È ÇÔ¼ö)
+vector <bool> premium(int n) { //ì†Œìˆ˜ ì°¾ëŠ” í•¨ìˆ˜( ì†Œìˆ˜ë©´ 0, ì†Œìˆ˜ ì•„ë‹ˆë©´ 1ì¸ ë¶ˆë¦¬ì•ˆ í•¨ìˆ˜)
 
 	vector <bool> v(n + 1);
 	v[0] = 1;
@@ -22,27 +24,27 @@ vector <bool> premium(int n) { //¼Ò¼ö Ã£´Â ÇÔ¼ö( ¼Ò¼ö¸é 0, ¼Ò¼ö ¾Æ´Ï¸é 1ÀÎ ºÒ¸®¾
 }
 
 int main() {
-	ios_base::sync_with_stdio(0); //ÀÔÃâ·Â ºü¸£°Ô
+	ios_base::sync_with_stdio(0); //ì…ì¶œë ¥ ë¹ ë¥´ê²Œ
 	cin.tie(0);
 	cout.tie(0);
 
 	int n;
-	cin >> n; //ÀÔ·Â ¹Ş´Â ¼ıÀÚÀÇ °³¼ö
+	cin >> n; //ì…ë ¥ ë°›ëŠ” ìˆ«ìì˜ ê°œìˆ˜
 
 	int* array = new int[n];
 
 	for (int i = 0; i < n; i++) {
-		cin >> array[i]; //¼ıÀÚ ÀÔ·Â¹Ş±â
+		cin >> array[i]; //ìˆ«ì ì…ë ¥ë°›ê¸°
 	}
 
-	sort(array, array + n); //ÀÔ·Â¹ŞÀº ¼ıÀÚ Á¤·ÄÇØ¼­
-	int m = array[n - 1]; //°¡Àå Å« ¼ıÀÚ °ñ¶ó³»±â
+	sort(array, array + n); //ì…ë ¥ë°›ì€ ìˆ«ì ì •ë ¬í•´ì„œ
+	int m = array[n - 1]; //ê°€ì¥ í° ìˆ«ì ê³¨ë¼ë‚´ê¸°
 
-	vector <bool> vt = premium(m); // 1ºÎÅÍ °¡Àå Å« ¼ıÀÚ±îÁö ¼Ò¼öÀÎÁö ¾Æ´ÑÁö ÆÇº°ÇÏ´Â ÇÔ¼ö
+	vector <bool> vt = premium(m); // 1ë¶€í„° ê°€ì¥ í° ìˆ«ìê¹Œì§€ ì†Œìˆ˜ì¸ì§€ ì•„ë‹Œì§€ íŒë³„í•˜ëŠ” í•¨ìˆ˜
 
 	int count = 0;
 	for (int i = 0; i < n; i++) {
-		if (vt[array[i]] == 0) { //ÀÔ·Â¹ŞÀº ¼ıÀÚ°¡ ¼Ò¼öÀÌ¸é count 1 Áõ°¡
+		if (vt[array[i]] == 0) { //ì…ë ¥ë°›ì€ ìˆ«ìê°€ ì†Œìˆ˜ì´ë©´ count 1 ì¦ê°€
 			count++;
 		}
 	}
