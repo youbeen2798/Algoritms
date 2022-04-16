@@ -1,9 +1,11 @@
+// ìˆ˜ì—´ Aë¥¼ ì…ë ¥ë°›ì•„ ìˆ˜ì—´ ì† ì†Œìˆ˜ë“¤ì˜ ìµœì†Œê³µë°°ìˆ˜ë¥¼ ì¶œë ¥í•´ì£¼ëŠ” í”„ë¡œê·¸ë¨
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
 
-vector <bool> premium(long long m) { //m±îÁö ¼Ò¼ö ¿©ºÎ ÆÇº°ÇØÁÖ´Â ÇÔ¼ö(0ÀÌ¸é ¼Ò¼ö, 1ÀÌ¸é ¼Ò¼ö ¾Æ´Ô)
+vector <bool> premium(long long m) { //mê¹Œì§€ ì†Œìˆ˜ ì—¬ë¶€ íŒë³„í•´ì£¼ëŠ” í•¨ìˆ˜(0ì´ë©´ ì†Œìˆ˜, 1ì´ë©´ ì†Œìˆ˜ ì•„ë‹˜)
 	vector <bool> v(m + 1);
 
 	v[0] = 1;
@@ -21,47 +23,47 @@ vector <bool> premium(long long m) { //m±îÁö ¼Ò¼ö ¿©ºÎ ÆÇº°ÇØÁÖ´Â ÇÔ¼ö(0ÀÌ¸é ¼Ò¼
 }
 
 int main() {
-	ios_base::sync_with_stdio(0); //ÀÔÃâ·Â ºü¸£°Ô
+	ios_base::sync_with_stdio(0); //ì…ì¶œë ¥ ë¹ ë¥´ê²Œ
 	cin.tie(0);
 	cout.tie(0);
 
 	int n;
 	cin >> n;
 
-	long long* array = new long long[n]; //¹è¿­ ¼±¾ğ
+	long long* array = new long long[n]; //ë°°ì—´ ì„ ì–¸
 
 	for (int i = 0; i < n; i++) {
-		cin >> array[i]; //¹è¿­ ¿ø¼Ò ÀÔ·Â
+		cin >> array[i]; //ë°°ì—´ ì›ì†Œ ì…ë ¥
 	}
 
-	sort(array, array + n); //¹è¿­ Á¤·ÄÇØ¼­
-	long long m = array[n - 1]; //¹è¿­¿¡¼­ °¡Àå Å« ¿ø¼Ò ÀúÀå
+	sort(array, array + n); //ë°°ì—´ ì •ë ¬í•´ì„œ
+	long long m = array[n - 1]; //ë°°ì—´ì—ì„œ ê°€ì¥ í° ì›ì†Œ ì €ì¥
 
-	vector <bool> vt = premium(m); //1ºÎÅÍ ¹è¿­¿¡¼­ °¡Àå Å« ¿ø¼Ò(m)±îÁö ¼Ò¼ö¸é 0, ¼Ò¼ö°¡ ¾Æ´Ï¸é 1
+	vector <bool> vt = premium(m); //1ë¶€í„° ë°°ì—´ì—ì„œ ê°€ì¥ í° ì›ì†Œ(m)ê¹Œì§€ ì†Œìˆ˜ë©´ 0, ì†Œìˆ˜ê°€ ì•„ë‹ˆë©´ 1
 
 	vector <long long> vs;
 	for (int i = 0; i < n; i++) {
-		if (vt[array[i]] == 0) { // ¹è¿­ ¿ø¼Ò°¡ ¼Ò¼öÀÌ¸é
-			vs.push_back(array[i]); //vs ¹è¿­¿¡ ÀúÀå
+		if (vt[array[i]] == 0) { // ë°°ì—´ ì›ì†Œê°€ ì†Œìˆ˜ì´ë©´
+			vs.push_back(array[i]); //vs ë°°ì—´ì— ì €ì¥
 		}
 	}
 
-	if (vs.size() == 0) { 	//¸¸¾à ÀÔ·Â¹ŞÀº ¿ø¼Ò Áß ¼Ò¼ö°¡ ¾ø´Ù¸é
-		cout << "-1"; //-1 Ãâ·Â
+	if (vs.size() == 0) { 	//ë§Œì•½ ì…ë ¥ë°›ì€ ì›ì†Œ ì¤‘ ì†Œìˆ˜ê°€ ì—†ë‹¤ë©´
+		cout << "-1"; //-1 ì¶œë ¥
 		return 0;
 	}
 
-	sort(vs.begin(), vs.end()); //¼Ò¼ö°¡ µé¾îÀÖ´Â ¹è¿­À» Á¤·ÄÇØ¼­
-	vs.erase(unique(vs.begin(), vs.end()), vs.end()); //¹è¿­ Áßº¹ ¿ø¼Ò Á¦°Å
+	sort(vs.begin(), vs.end()); //ì†Œìˆ˜ê°€ ë“¤ì–´ìˆëŠ” ë°°ì—´ì„ ì •ë ¬í•´ì„œ
+	vs.erase(unique(vs.begin(), vs.end()), vs.end()); //ë°°ì—´ ì¤‘ë³µ ì›ì†Œ ì œê±°
 
 
-	//¼Ò¼öµéÀÇ ÃÖ¼Ò°ø¹è¼ö´Â ¼Ò¼öµéÀÇ °ö°ú °°´Ù
+	//ì†Œìˆ˜ë“¤ì˜ ìµœì†Œê³µë°°ìˆ˜ëŠ” ì†Œìˆ˜ë“¤ì˜ ê³±ê³¼ ê°™ë‹¤
 	long long result = 1;
 	for (int i = 0; i < vs.size(); i++) {
-		result *= vs[i]; // ¼Ò¼ö ¿ø¼ÒµéÀ» °öÇÔ
+		result *= vs[i]; // ì†Œìˆ˜ ì›ì†Œë“¤ì„ ê³±í•¨
 	}
 
-	cout << result; //ÃÖ¼Ò°ø¹è¼ö Ãâ·Â
+	cout << result; //ìµœì†Œê³µë°°ìˆ˜ ì¶œë ¥
 
 
 }
