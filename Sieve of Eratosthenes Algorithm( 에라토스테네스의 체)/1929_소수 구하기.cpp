@@ -1,3 +1,5 @@
+// 2ê°œì˜ ì •ìˆ˜(Mê³¼ N)ë¥¼ ì…ë ¥ë°›ì•„ Mì´ìƒ Nì´í•˜ì˜ ì†Œìˆ˜ë¥¼ ì¶œë ¥í•´ì£¼ëŠ” í”„ë¡œê·¸ë¨
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -5,7 +7,7 @@
 
 using namespace std;
 
-vector <bool> premium(int m) { // 1ºÎÅÍ Á¤¼ö m±îÁö ¼Ò¼ö ÆÇº° ÇÔ¼ö(¼Ò¼ö¸é 0, ¾Æ´Ï¸é 1)
+vector <bool> premium(int m) { // 1ë¶€í„° ì •ìˆ˜ mê¹Œì§€ ì†Œìˆ˜ íŒë³„ í•¨ìˆ˜(ì†Œìˆ˜ë©´ 0, ì•„ë‹ˆë©´ 1)
 	vector <bool> v(m + 1);
 
 	v[0] = 1;
@@ -19,11 +21,11 @@ vector <bool> premium(int m) { // 1ºÎÅÍ Á¤¼ö m±îÁö ¼Ò¼ö ÆÇº° ÇÔ¼ö(¼Ò¼ö¸é 0, ¾Æ´Ï
 			v[j] = 1;
 		}
 	}
-	return v; // Á¤¼ö m±îÁö ¼Ò¼ö¸é 0, ¾Æ´Ï¸é 1ÀÎ º¤ÅÍ ¹İÈ¯
+	return v; // ì •ìˆ˜ mê¹Œì§€ ì†Œìˆ˜ë©´ 0, ì•„ë‹ˆë©´ 1ì¸ ë²¡í„° ë°˜í™˜
 }
 
 int main() {
-	ios_base::sync_with_stdio(0); //ÀÔÃâ·Â ºü¸£°Ô
+	ios_base::sync_with_stdio(0); //ì…ì¶œë ¥ ë¹ ë¥´ê²Œ
 	cin.tie(0);
 	cout.tie(0);
 
@@ -32,9 +34,9 @@ int main() {
 
 	vector <bool> vt = premium(n);
 
-	for (int i = m; i <= n; i++) { // Á¤¼ö mºÎÅÍ n±îÁö
-		if (vt[i] == 0) { // ¼Ò¼öÀÌ¸é
-			cout << i << '\n'; // Ãâ·Â
+	for (int i = m; i <= n; i++) { // ì •ìˆ˜ më¶€í„° nê¹Œì§€
+		if (vt[i] == 0) { // ì†Œìˆ˜ì´ë©´
+			cout << i << '\n'; // ì¶œë ¥
 		}
 	}
 }
