@@ -5,17 +5,17 @@ using namespace std;
 
 
 int main() {
-	ios_base::sync_with_stdio(0); //ÀÔÃâ·Â ºü¸£°Ô
+	ios_base::sync_with_stdio(0); //ì…ì¶œë ¥ ë¹ ë¥´ê²Œ
 	cin.tie(0);
 	cout.tie(0);
 
-	int n; //Ç³¼± °³¼ö
+	int n; //í’ì„  ê°œìˆ˜ ì…ë ¥ë°›ê¸°
 	cin >> n;
 
-	deque <pair<int, int> > dq(n);
+	deque <pair<int, int> > dq(n); //ì •ìˆ˜ì™€ ì •ìˆ˜ ìŒì¸ deque ì„ ì–¸
 
 	for (int i = 0; i < n; i++) {
-		dq[i].first = i + 1;
+		dq[i].first = i + 1; 
 		cin >>  dq[i].second;
 	}
 
