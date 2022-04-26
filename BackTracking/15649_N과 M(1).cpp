@@ -1,5 +1,5 @@
-//ë²¡íŠ¸ëž˜í‚¹ ì•Œê³ ë¦¬ì¦˜
-//ì •ìˆ˜ nê³¼ mì´ ì£¼ì–´ì¡Œì„ ë•Œ nPmì˜ ëª¨ë“  ê²½ìš°ì˜ ìˆ˜ë¥¼ ì¶œë ¥í•˜ëŠ” í”„ë¡œê·¸ëž¨
+//º¤Æ®·¡Å· ¾Ë°í¸®Áò
+//Á¤¼ö n°ú mÀÌ ÁÖ¾îÁ³À» ¶§ nPmÀÇ ¸ðµç °æ¿ìÀÇ ¼ö¸¦ Ãâ·ÂÇÏ´Â ÇÁ·Î±×·¥
 
 #include <iostream>
 
@@ -10,9 +10,10 @@ int arr[20] = { 0, };
 bool isused[21] = { false, };
 
 void func(int k) { //0
-	if (k == m) { //ì •ìˆ˜ mê°œê°€ ë‹¤ ì°¨ë©´
+	if (k == m) {
 		for (int i = 0; i < m; i++) {
-			cout << arr[i] << ' '; // ì›ì†Œ ì¶œë ¥
+			cout << arr[i] << ' ';
+		}
 		cout << "\n";
 	}
 	else {
@@ -20,7 +21,7 @@ void func(int k) { //0
 			if (!isused[i]) { 
 				arr[k] = i;
 				isused[i] = 1;
-				func(k + 1); //ë‹¤ìŒ ì¸ë±ìŠ¤ì˜ ì •ìˆ˜ êµ¬í•˜ëŠ” ê²ƒ
+				func(k + 1); //´ÙÀ½ ÀÎµ¦½ºÀÇ Á¤¼ö ±¸ÇÏ´Â °Í
 				isused[i] = 0;
 			}
 		}
@@ -29,7 +30,7 @@ void func(int k) { //0
 
 
 int main() {
-	ios_base::sync_with_stdio(0); //ìž…ì¶œë ¥ ë¹ ë¥´ê²Œ
+	ios_base::sync_with_stdio(0); //ÀÔÃâ·Â ºü¸£°Ô
 	cin.tie(0);
 	cout.tie(0);
 
