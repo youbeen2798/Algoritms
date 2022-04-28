@@ -57,7 +57,7 @@ int main() {
 	end_value = v[n - 1];
 
 	for (int i = 0; i < 10001; i++) {
-		isused[i] = 1; //isused ¹è¿­ ¸ðµÎ 1·Î ÃÊ±âÈ­
+		isused[i] = 1; //isused ë°°ì—´ ëª¨ë‘ 1ë¡œ ì´ˆê¸°í™”
 	}
 
 	hello(v); //hello(5)
