@@ -16,15 +16,15 @@ int main() {
 		int* array = new int[N+1];
 
 		for (int i = 1; i <= N; i++) {
-			cin >> array[i]; //2 3 4 5 6 7 1
+			cin >> array[i]; 
 		}
 
 		int k = 0;
 		int c = 1;
 
 		while (k < N && c != N) {
-			c = array[c]; //2 3 4 5 6 7
-			k++; //1 2 3 4 5 6
+			c = array[c];
+			k++; 
 		}
 
 		if (c != N)
