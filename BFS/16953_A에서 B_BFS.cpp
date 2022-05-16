@@ -11,13 +11,9 @@ void BFS(long long a, long long cnt) {
 
 	while (!q.empty()) {
 		pair<long long, long long> now = q.front();
-//		cout << "now.first: " << now.first << "\n"; //2
-//		cout << "now.second: " << now.second << "\n"; //1
 		q.pop();
 
 		if (now.first == B) {
-//			cout << "now.second: " << now.second << "\n";
-//			cout << "mini: " << mini << "\n";
 
 			if (now.second <= mini) {
 				mini = now.second;
