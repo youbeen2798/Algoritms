@@ -24,13 +24,13 @@ int main() {
 
 	dp[1] = 1;
 
-	for (int j = 2; j <= n; j++) { // j = 5
+	for (int j = 2; j <= n; j++) { 
 		idx = 0;
 		dp_max = 0;
 		for (int i = 1; i < j; i++) {
 			if (arr[i] < arr[j] && dp_max < dp[i]) {
-				idx = i; //idx = 4
-				dp_max = dp[i]; //dp_max = 2
+				idx = i; 
+				dp_max = dp[i]; 
 			}
 		}
 		if (idx == 0) {
