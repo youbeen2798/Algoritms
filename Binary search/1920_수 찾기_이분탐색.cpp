@@ -1,4 +1,4 @@
-//binary_search ÇÔ¼ö ÀÌ¿ë
+//binary_search í•¨ìˆ˜ ì´ìš©
 
 #include <iostream>
 #include <algorithm>
