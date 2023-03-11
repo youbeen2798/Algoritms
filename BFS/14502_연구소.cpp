@@ -1,104 +1,131 @@
 #include <iostream>
+#include <vector>
 #include <queue>
+#include <cstring>
+
 using namespace std;
 
-int n, m;
-int c = 0;
-int map[8][8];
-int tmp[8][8];
+int n; //세로 크기
+int m; //가로 크기
+int map[9][9];
+bool visited[9][9];
+int ans = 0;
+
+vector<pair<int, int>> walls;
 
 int dx[4] = { 1,-1,0,0 };
 int dy[4] = { 0,0,1,-1 };
 
-int mini_cnt = 65;
+void bfs(int x, int y) {
 
-void mapCopy(int(*a)[8], int(*b)[8]) {
+	queue<pair<int, int>> q;
 
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			b[i][j] = a[i][j];
-		}
-	}
-}
-
-void bfs() {
-	int ans[8][8];
-	mapCopy(tmp, ans);
-
-	queue <pair<int, int>> q;
-
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			if (ans[i][j] == 2) {
-				q.push(make_pair(i, j));				
-			}			
-		}
-	}
+	visited[x][y] = true;
+	q.push({ x,y });
 
 	while (!q.empty()) {
-		int x = q.front().first;
-		int y = q.front().second;
+		int a = q.front().first;
+		int b = q.front().second;
+
 		q.pop();
 
-		for (int p = 0; p < 4; p++) {
-			int nx = x + dx[p];
-			int ny = y + dy[p];
+		for (int i = 0; i < 4; i++) {
+			int nx = a + dx[i];
+			int ny = b + dy[i];
 
-			if ((0 <= nx) && (nx < n) && (0 <= ny) && (ny < m) && (ans[nx][ny] == 0)) {
-				ans[nx][ny] = 2;
-				q.push(make_pair(nx, ny));
+			if (0 <= nx && nx < n && 0 <= ny && ny < m && !visited[nx][ny] && map[nx][ny] != 1) {
+				visited[nx][ny] = true;
+				q.push({ nx,ny });
 			}
 		}
 	}
+}
 
-	int cnt = 0;
+void check() {
+	
+	int tmp_ans = 0;
+
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
-			if (ans[i][j] == 0) {
-				cnt++;
+			if (map[i][j] == 0 && !visited[i][j]) {
+				tmp_ans++;
 			}
 		}
 	}
 
-	c = max(c, cnt);
+	ans = max(ans, tmp_ans);
 }
-void wall(int cnt) {
-	if (cnt == 3) {
-		bfs();
+void spread_virus() {
+
+	memset(visited, false, sizeof(visited));
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (map[i][j] == 2 && !visited[i][j]) {
+				bfs(i, j);
+			}
+		}
+	}
+
+	check();
+}
+
+void combination(vector<pair<int, int>> arr, vector<pair<int, int>> comb, int r, int idx, int depth) {
+
+	if (r == 0) {
+	//	cout << "#####" << "\n";
+		//선택된 3곳 새로운 벽으로 만들기
+		for (int i = 0; i < comb.size(); i++) {
+			map[comb[i].first][comb[i].second] = 1;
+		}
+
+		spread_virus();
+		//벽 다시 빈 칸으로 만들기
+		for (int i = 0; i < comb.size(); i++) {
+			map[comb[i].first][comb[i].second] = 0;
+		}
+		return;
+	}
+	else if (arr.size() == depth) {
 		return;
 	}
 	else {
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				if (tmp[i][j] == 0) {
-					tmp[i][j] = 1;
-					wall(cnt + 1);
-					tmp[i][j] = 0;
-				}
+
+		comb[idx] = arr[depth];
+
+		combination(arr, comb, r - 1, idx + 1, depth + 1);
+
+		combination(arr, comb, r, idx, depth + 1);
+	}
+}
+void solution() {
+
+	vector<pair<int, int>> comb(3);
+
+	combination(walls, comb, 3, 0, 0);
+
+	cout << ans;
+}
+
+void input() {
+
+	cin >> n >> m;
+
+	//0: 빈칸, 1: 벽, 2: 바이러스 위치
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			cin >> map[i][j];
+			if (map[i][j] == 0) {
+				walls.push_back({ i,j });
 			}
 		}
 	}
 }
-
 int main() {
-	cin >> n >> m; //세로 크기 // 가로크기
-	
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			cin >> map[i][j];
-		}
-	}
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
 
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			if (map[i][j] == 0) {
-				mapCopy(map, tmp); //map -> tmp로 배열 복사
-				tmp[i][j] = 1;
-				wall(1);
-				tmp[i][j] = 0;
-			}
-		}
-	}
-	
-	cout << c;
+	input();
+	solution();
 }
