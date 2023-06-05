@@ -1,155 +1,144 @@
 #include <iostream>
 #include <deque>
+#include <vector>
+#include <set>
+
 using namespace std;
 
-int n, m, t;
+int n; //원판 개수
+int m; //원판 크기
+int t; //회전 횟수
+
 deque<int> dq[51];
-deque<bool> check_erase[51];
-bool erase_flag = false;
 
-void real_rotate(int num, int di, int ki) {
-	//번호가 num인 원판을 di 방향으로 ki칸 회전
+struct info {
+	int xi;
+	int di;
+	int ki;
+};
 
-	if (di == 0) {
-		//시계 방향이면
-		for (int i = 0; i < ki; i++) {
-			int back = dq[num].back();
-			dq[num].pop_back();
-			dq[num].push_front(back);
-		}
+vector<info> v;
+
+void rotate(info i) {
+	int xi = i.xi; //번호가 xi배수인 원판을 
+	int di = i.di; //di방향으로
+	int ki = i.ki; //ki칸 회전시킨다.
+
+	if (ki % m == 0) {
+		ki = m;
 	}
 	else {
-		//반시계 방향이면
-		for (int i = 0; i < ki; i++) {
-			int front = dq[num].front();
-			dq[num].pop_front();
-			dq[num].push_back(front);
+		ki = ki % m;
+	}
+
+	if (di == 0) { //시계방향
+		
+		for (int x = 1; x <= n; x++) {
+			if (x % xi == 0) { //번호가 xi 배수인 원판을
+				for (int j = 0; j < ki; j++) {
+					int num = dq[x].back();
+					dq[x].pop_back();
+					dq[x].push_front(num);
+				}
+			}
+		}
+
+	}
+	else { //반시계방향
+		for (int x = 1; x <= n; x++) {
+			if (x % xi == 0) { //번호가 xi 배수인 원판을
+				for (int j = 0; j < ki; j++) {
+					int num = dq[x].front();
+					dq[x].pop_front();
+					dq[x].push_back(num);
+				}
+			}
+		}
+
+	}
+}
+
+void erase(info i) {
+	int xi = i.xi; //번호가 xi배수인 원판
+
+	set<pair<int, int>> s; //삭제될 숫자 위치
+
+	for (int x = 1; x <= n; x++) {
+		for (int i = 0; i < m - 1; i++) {
+			if (dq[x][i] == dq[x][i + 1] && dq[x][i] != -1) {
+				s.insert({ x, i });
+				s.insert({ x,i + 1 });
+			}
+		}
+		if (dq[x][0] == dq[x][m - 1] && dq[x][0] != -1) {
+			s.insert({ x, 0 });
+			s.insert({ x, m - 1 });
 		}
 	}
-}
-void rotate(int xi, int di, int ki) {
-	//번호가 xi의 배수인 원판을 di 방향으로 ki칸 회전
-	for (int i = xi; i <= n; i += xi) {
-		real_rotate(i, di, ki);
-	}
-}
 
-void erase_reset() {
-
-	for (int i = 1; i <= n; i++) {
-		check_erase[i].clear();
+	for (int x = 1; x < n; x++) {
 		for (int j = 0; j < m; j++) {
-			check_erase[i].push_back(false);
-		}
-	}
-
-}
-void real_left_right_erase(int num) {
-	//원판 num에 있는 숫자 확인하고 지우기
-
-
-	//좌우로 인접
-	for (int i = 0; i < dq[num].size() - 1; i++) {
-		if (dq[num][i] == dq[num][i + 1] && dq[num][i] != -1) {
-			check_erase[num][i] = true;
-			check_erase[num][i + 1] = true;
-		}
-	}
-
-	if (dq[num][dq[num].size() - 1] == dq[num][0] && dq[num][0] != -1) {
-		check_erase[num][0] = true;
-		check_erase[num][dq[num].size() - 1] = true;
-	}
-}
-
-void real_top_down_erase(int num) {
-
-	//상하로 인접
-	for (int j = 0; j < m; j++) {
-		if (dq[num][j] == dq[num + 1][j] && dq[num][j] != -1) {
-			check_erase[num][j] = true;
-			check_erase[num + 1][j] = true;
-		}
-	}
-}
-
-
-void erase() {
-	//인접한 수 지우기
-
-	erase_reset();
-
-	for (int i = 1; i <= n; i++) {
-		real_left_right_erase(i);
-	}
-
-	for(int i = 1; i < n; i++){
-		real_top_down_erase(i);
-	}
-	
-	for (int i = 1; i <= n; i++) {
-		for (int j = 0; j < m; j++) {
-			if (check_erase[i][j]) {
-				erase_flag = true;
-				dq[i][j] = -1;
+			if (dq[x][j] == dq[x + 1][j] && dq[x][j] != -1){
+				s.insert({ x, j });
+				s.insert({ x + 1, j });
 			}
 		}
 	}
-}
 
 
-void change_with_average() {
-	
-	//평균으로 맞추기
-	if (erase_flag) {
-		return;
+	for (auto tmp : s) {
+		dq[tmp.first][tmp.second] = -1;
 	}
 
-	double sum = 0;
-	double avg;
-	int cnt = 0;
-
-	for (int i = 1; i <= n; i++) {
-		for (int j = 0; j < m; j++) {
-			if (dq[i][j] != -1) {
-				sum += dq[i][j];
-				cnt++;
+	if (s.size() == 0) {
+		double sum = 0;
+		double cnt = 0;
+		for (int i = 1; i <= n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (dq[i][j] != -1) {
+					sum += dq[i][j];
+					cnt++;
+				}
 			}
 		}
-	}
-	
 
-	avg = sum / (double)cnt; //평균
-
-	for (int i = 1; i <= n; i++) {
-		for (int j = 0; j < m; j++) {
-			if (dq[i][j] != -1) {
-				if (dq[i][j] > avg) {
+		double average = sum / cnt;
+		for (int i = 1; i <= n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (dq[i][j] != -1 && average < dq[i][j]) {
 					dq[i][j]--;
 				}
-				else if (dq[i][j] < avg) {
+				else if (dq[i][j] != -1 && average > dq[i][j]) {
 					dq[i][j]++;
 				}
 			}
 		}
 	}
-
-}
-void solution(int xi, int di, int ki) {
-	 
-	rotate(xi, di, ki); //회전
-
-	erase_flag = false; //아직 지우지 않았다는 의미
-	erase();
-	change_with_average(); //평균으로 맞추기
 }
 
+void solution() {
 
+	for (int i = 0; i < t; i++) {
+		rotate(v[i]);
+		erase(v[i]);
+	}
+
+	int ans = 0;
+	for (int i = 1; i <= n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (dq[i][j] != -1) {
+				ans += dq[i][j];
+			}
+		}
+	}
+	cout << ans;
+}
 void input() {
+
 	cin >> n >> m >> t;
 
 	for (int i = 1; i <= n; i++) {
-		for (int j = 0; j < m; j++) {
+		for (int j = 1; j <= m; j++) {
 			int num;
 			cin >> num;
 			dq[i].push_back(num);
@@ -158,23 +147,10 @@ void input() {
 
 	for (int i = 0; i < t; i++) {
 		int xi, di, ki;
-		cin >> xi >> di >> ki;
-		solution(xi, di, ki);
+		cin >> xi >> di >> ki; 
+		//번호가 xi의 배수인 원판을 di 방향으로 ki칸 회전시킨다.
+		v.push_back({ xi, di,ki });
 	}
-}
-
-void output() {
-	int ans = 0;
-
-	for (int i = 1; i <= n; i++) {
-		for (int j = 0; j < m; j++) {
-			if (dq[i][j] != -1) {
-				ans += dq[i][j];
-			}
-		}
-	}
-
-	cout << ans;
 }
 int main() {
 	ios_base::sync_with_stdio(0);
@@ -182,5 +158,5 @@ int main() {
 	cout.tie(0);
 
 	input();
-	output();
+	solution();
 }
